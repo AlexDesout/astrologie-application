@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Utilisateurs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UtilisateursController extends Controller
 {
@@ -33,33 +34,6 @@ class UtilisateursController extends Controller
     }
 
     // Fonction qui recherche le signe du zodiaque en fonction du jour et du mois
-   
-
-    public function ajoutUtilisateurs(Request $request)
-    {
-        $zodiaque = $this->chercheZodiaque($request->jour, $request->mois);
-        $chinois = $this->chercheChinois($request->annee);
-
-        $utilisateur = new Utilisateurs;
-        $utilisateur->pseudo = $request->pseudo;
-        $utilisateur->mail = $request->mail;
-        $utilisateur->mdp = $request->mdp;
-        $utilisateur->signe_zodiaque = $zodiaque;
-        $utilisateur->signe_chinois = $chinois;
-        $utilisateur->jour = $request->jour;
-        $utilisateur->mois = $request->mois;
-        $utilisateur->annee = $request->annee;
-        $ok = $utilisateur->save();
-        if ($ok) {
-            return response()->json(["status" => 1, "message" => "Utilisateur ajouté"],201);
-        } 
-        else {
-            return response()->json(["status" => 0, "message" => "pb lors de
-    l'ajout"],400);
-        }
-        
-    }
-
     function chercheZodiaque($jour, $mois)
     {
         if (($mois == 1 && $jour >= 20) || ($mois == 2 && $jour <= 18)) {
@@ -90,6 +64,7 @@ class UtilisateursController extends Controller
         
     }
 
+     // Fonction qui recherche le signe astrologique chinois en fonction de l'année
     function chercheChinois($annee)
     {
         $animaux = ["Singe", "Coq", "Chien", "Cochon", "Rat", "Boeuf", "Tigre", "Lapin", "Dragon", "Serpent", "Cheval", "Chèvre"];
@@ -97,4 +72,48 @@ class UtilisateursController extends Controller
         $signe = $animaux[$cycles];
         return $signe;
     }
+   
+
+    public function ajoutUtilisateurs(Request $request)
+    {
+        // Validation des informations saisies
+        $validator = Validator::make($request->all(), [
+            // 'id' => ['required','numeric'],
+            'pseudo' => ['required','string', 'unique:utilisateurs,pseudo'],
+            'mail' => ['required','email', 'unique:utilisateurs,mail'],
+            'mdp' => ['required','string'],
+            'jour' => ['required', 'integer', 'between:1,31'],
+            'mois' => ['required', 'integer', 'between:1,12'],
+            'annee' => ['required', 'integer', 'between:1900,2023']
+            ]);
+    
+            if ($validator->fails()) {
+                return $validator->errors();
+            }
+
+        // Recherche des signes astro
+        $zodiaque = $this->chercheZodiaque($request->jour, $request->mois);
+        $chinois = $this->chercheChinois($request->annee);
+
+        // Ajout dans la bdd
+        $utilisateur = new Utilisateurs;
+        $utilisateur->pseudo = $request->pseudo;
+        $utilisateur->mail = $request->mail;
+        $utilisateur->mdp = $request->mdp;
+        $utilisateur->signe_zodiaque = $zodiaque;
+        $utilisateur->signe_chinois = $chinois;
+        $utilisateur->jour = $request->jour;
+        $utilisateur->mois = $request->mois;
+        $utilisateur->annee = $request->annee;
+        $ok = $utilisateur->save();
+        if ($ok) {
+            return response()->json(["status" => 1, "message" => "Utilisateur ajouté"],201);
+        } 
+        else {
+            return response()->json(["status" => 0, "message" => "pb lors de
+    l'ajout"],400);
+        }
+        
+    }
+
 }
