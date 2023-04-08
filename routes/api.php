@@ -19,3 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 // Liste paginée des utilisateurs
 Route::get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'listeUtilisateurs']);
+
+// Détails d'un seul utilisateur
+Route::get('/utilisateurs/{id}', [App\Http\Controllers\UtilisateursController::class, 'detailsUtilisateurs']);
