@@ -22,3 +22,6 @@ Route::get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class,
 
 // Détails d'un seul utilisateur
 Route::get('/utilisateurs/{id}', [App\Http\Controllers\UtilisateursController::class, 'detailsUtilisateurs']);
+
+// Ajout d'un utilisateur
+Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);

@@ -18,8 +18,9 @@ return new class extends Migration
             $table->ipAddress('mdp');
             $table->string('signe_zodiaque');
             $table->string('signe_chinois');
-            $table->date('date_naissance');
-            $table->time('heure_naissance', $precision = 0);
+            $table->tinyInteger('jour');
+            $table->tinyInteger('mois');
+            $table->smallInteger('annee');
             $table->timestamps();
         });
     }

@@ -20,8 +20,9 @@ class UtilisateursSeeder extends Seeder
             'mdp' => "fernand69",
             'signe_zodiaque' => "bélier",
             'signe_chinois' => "coq",
-            'date_naissance' => "1981-04-12",
-            'heure_naissance' => "12:00:00"
+            'jour' => "12",
+            'mois' => "12",
+            'annee' => "1981"
         ]);
         DB::table('utilisateurs')->insert([
             'pseudo' => 'Al',
@@ -29,8 +30,9 @@ class UtilisateursSeeder extends Seeder
             'mdp' => "alexx",
             'signe_zodiaque' => "cancer",
             'signe_chinois' => "chèvre",
-            'date_naissance' => "2003-07-11",
-            'heure_naissance' => "12:00:00"
+            'jour' => "1",
+            'mois' => "07",
+            'annee' => "2003" 
         ]);
       
     }
