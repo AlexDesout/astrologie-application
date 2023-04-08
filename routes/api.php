@@ -18,10 +18,23 @@ use Illuminate\Support\Facades\Route;
 
 
 // Liste paginée des utilisateurs
+
+// Route::middleware(['basic','digest'])->get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'listeUtilisateurs']);
+// Route::group(['middleware' => ['basic', 'digest']])->get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'listeUtilisateurs']);
+
+// Route::group(['middleware' => ['basic', 'digest']])->get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'listeUtilisateurs']);
 Route::get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'listeUtilisateurs']);
 
 // Détails d'un seul utilisateur
 Route::get('/utilisateurs/{id}', [App\Http\Controllers\UtilisateursController::class, 'detailsUtilisateurs']);
 
 // Ajout d'un utilisateur
-Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);
+
+
+Route::middleware(['basic'])->group(function () {
+    Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);
+});
+
+Route::middleware(['digest'])->group(function () {
+    Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);
+});

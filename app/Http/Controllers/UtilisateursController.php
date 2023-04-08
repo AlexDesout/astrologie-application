@@ -107,7 +107,7 @@ class UtilisateursController extends Controller
         $utilisateur->annee = $request->annee;
         $ok = $utilisateur->save();
         if ($ok) {
-            return response()->json(["status" => 1, "message" => "Utilisateur ajouté"],201);
+            return response()->json(["status" => 1, "message" => "Utilisateur ajouté","data" => $utilisateur],201);
         } 
         else {
             return response()->json(["status" => 0, "message" => "pb lors de
