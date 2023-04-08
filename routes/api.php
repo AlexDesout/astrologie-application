@@ -31,10 +31,13 @@ Route::get('/utilisateurs/{id}', [App\Http\Controllers\UtilisateursController::c
 // Ajout d'un utilisateur
 
 
-Route::middleware(['basic'])->group(function () {
-    Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);
-});
+// Route::middleware(['basic'])->group(function () {
+//     Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);
+// });
 
-Route::middleware(['digest'])->group(function () {
-    Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);
-});
+Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs'])->middleware('auth.basic');
+// Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs'])->middleware('auth.digest');
+
+// Route::middleware(['digest'])->group(function () {
+//     Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);
+// });

@@ -17,6 +17,12 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
+    'basic' => [
+        'driver' => 'basic',
+        'provider' => 'users',
+        'realm' => 'Restricted area',
+   ],
+  
 
     /*
     |--------------------------------------------------------------------------
@@ -39,6 +45,12 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'digest' => [
+            'driver' => 'digest',
+            'provider' => 'users',
+            'realm' => 'Restricted area',
+            'qop' => 'auth',
         ],
     ],
 

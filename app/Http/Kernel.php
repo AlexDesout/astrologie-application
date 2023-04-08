@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Http\Middleware\AuthenticateWithDigestAuth;
+
 
 class Kernel extends HttpKernel
 {
@@ -49,6 +51,8 @@ class Kernel extends HttpKernel
         ],
         'digest' => [
             \App\Http\Middleware\DigestAuthentication::class,
+            'auth.digest' => AuthenticateWithDigestAuth::class,
+
         ],
         'basic' => [
             \App\Http\Middleware\AuthBasic::class,
