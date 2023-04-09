@@ -1,23 +1,28 @@
 ## À propos de l'application :
 
-Cette application est une API sur laquelle il est possible de créer un compte utilisateur. À des informations de naissance rentrées, les signes astrologiques chinois et du zodiaques sont attribués à l'utilisateur lors de son inscription. 
+
+Cette application est une API sur laquelle il est possible de créer un compte utilisateur. À des informations de naissance rentrées, les signes astrologiques chinois et du zodiaque sont attribués à l'utilisateur lors de son inscription. 
 
 
-## Les différentes fonctionnalités : 
+### Les différentes fonctionnalités : 
+
 
 - [L'affichage de tous les utilisateurs](#Laffichage-de-tous-les-utilisateurs).
-- [L'affichage d'information d'un utilisateur en particulier](https://laravel.com/docs/routing).
+- [L'affichage d'information d'un utilisateur en particulier](#Laffichage-d'information-d'un-utilisateur-en-particulier).
 - [L'ajout d'un utilisateur](https://laravel.com/docs/routing).
 - [La suppression d'un utilisateur](https://laravel.com/docs/routing).
 - [La modification des informations d'un utilisateur](https://laravel.com/docs/routing).
 
-## L'affichage de tous les utilisateurs
+
+### L'affichage de tous les utilisateurs
+
 
 Cette route permet d'afficher tous les utilisateurs inscrits dans la base de données. De plus, cette liste d'utilisateurs fonctionne sous la forme de page. Une page peut contenir jusqu'à 10 utilisateurs.
 
-La route permettant d'accéder à cette fonctionalité s'écrit de la manière suivant : **Route::get('/utilisateurs')**
+La route permettant d'accéder à cette fonctionnalité s'écrit de la manière suivante : **Route::get('/utilisateurs')**
+Il est également possible de choisir la page que l'on veut afficher en écrivant ceci : **Route::get('/utilisateurs?page=(numeroDePage)')**
 
-Elle retourne un résultat JSON de la forme : 
+Elle retourne un résultat JSON de la forme suivante : 
 
 ```
 {
@@ -75,22 +80,27 @@ Elle retourne un résultat JSON de la forme :
 
 ```
 
+### L'affichage d'information d'un utilisateur en particulier
 
-### Premium Partners
+Cette route permet d'afficher les informations d'un utilisateur inscrit dans la base de données. La recherche se fait à partir de l'id de l'utilisateur qui sera saisi dans l'URL.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+La route permettant d'accéder à cette fonctionnalité s'écrit de la manière suivante : **Route::get('/utilisateurs/idUtilisateur')**
+
+Elle retourne un résultat JSON de la forme suivante : 
+
+```
+[
+	{
+		"pseudo": "Bertrand",
+		"signe_zodiaque": "Vierge",
+		"signe_chinois": "Singe",
+		"jour": 5,
+		"mois": 9,
+		"annee": 1920
+	}
+]
+
+```
 
 ## Contributing
 
