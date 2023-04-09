@@ -15,9 +15,66 @@ Cette application est une API sur laquelle il est possible de créer un compte u
 
 Cette route permet d'afficher tous les utilisateurs inscrits dans la base de données. De plus, cette liste d'utilisateurs fonctionne sous la forme de page. Une page peut contenir jusqu'à 10 utilisateurs.
 
-La route permettant d'accéder à cette fonctionalité s'écrit de la manière suivant : Route::get('/utilisateurs')
+La route permettant d'accéder à cette fonctionalité s'écrit de la manière suivant : **Route::get('/utilisateurs')**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Elle retourne un résultat JSON de la forme : 
+
+```
+{
+	"current_page": 1,
+	"data": [
+		{
+			"pseudo": "Test",
+			"signe_zodiaque": "Bélier",
+			"signe_chinois": "Chèvre"
+		},
+		{
+			"pseudo": "ok",
+			"signe_zodiaque": "Bélier",
+			"signe_chinois": "Chèvre"
+		},
+		{
+			"pseudo": "Jo123",
+			"signe_zodiaque": "Poissons",
+			"signe_chinois": "Rat"
+		},
+		{
+			"pseudo": "Jo12",
+			"signe_zodiaque": "Sagittaire",
+			"signe_chinois": "Dragon"
+		},
+	],
+	"first_page_url": "http:\/\/127.0.0.1:8000\/api\/utilisateurs?page=1",
+	"from": 1,
+	"last_page": 1,
+	"last_page_url": "http:\/\/127.0.0.1:8000\/api\/utilisateurs?page=1",
+	"links": [
+		{
+			"url": null,
+			"label": "&laquo; Previous",
+			"active": false
+		},
+		{
+			"url": "http:\/\/127.0.0.1:8000\/api\/utilisateurs?page=1",
+			"label": "1",
+			"active": true
+		},
+		{
+			"url": null,
+			"label": "Next &raquo;",
+			"active": false
+		}
+	],
+	"next_page_url": null,
+	"path": "http:\/\/127.0.0.1:8000\/api\/utilisateurs",
+	"per_page": 10,
+	"prev_page_url": null,
+	"to": 6,
+	"total": 6
+}
+
+```
+
 
 ### Premium Partners
 
