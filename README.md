@@ -10,14 +10,14 @@ Cette application est une API sur laquelle il est possible de créer un compte u
 - [L'affichage de tous les utilisateurs](#Laffichage-de-tous-les-utilisateurs).
 - [L'affichage d'information d'un utilisateur en particulier](#Laffichage-d'information-d'un-utilisateur-en-particulier).
 - [L'ajout d'un utilisateur](#Lajout-dun-utilisateur).
-- [La suppression d'un utilisateur](https://laravel.com/docs/routing).
-- [La modification des informations d'un utilisateur](https://laravel.com/docs/routing).
+- [La suppression d'un utilisateur](#La-suppression-d'un-utilisateur).
+- [La modification des informations d'un utilisateur](#La-modification-des-informations-d'un-utilisateur).
 
 
 ## L'affichage de tous les utilisateurs
 
 
-Cette route permet d'afficher tous les utilisateurs inscrits dans la base de données. De plus, cette liste d'utilisateurs fonctionne sous la forme de page. Une page peut contenir jusqu'à 10 utilisateurs.
+Cette route permet d'afficher tous les utilisateurs inscrits dans la base de données. De plus, cette liste d'utilisateurs fonctionne sous la forme de **page**. Une page peut contenir jusqu'à **10 utilisateurs**.
 
 La route permettant d'accéder à cette fonctionnalité s'écrit de la manière suivante : **Route::get('/utilisateurs')**
 Il est également possible de choisir la page que l'on veut afficher en écrivant ceci : **Route::get('/utilisateurs?page=(numeroDePage)')**
@@ -82,7 +82,7 @@ Elle retourne un résultat JSON de la forme suivante :
 
 ## L'affichage d'information d'un utilisateur en particulier
 
-Cette route permet d'afficher les informations d'un utilisateur inscrit dans la base de données. La recherche se fait à partir de l'id de l'utilisateur qui sera saisi dans l'URL.
+Cette route permet d'afficher les informations d'un utilisateur inscrit dans la base de données. La recherche se fait à partir de **l'id** de l'utilisateur qui sera saisi dans l'URL.
 
 La route permettant d'accéder à cette fonctionnalité s'écrit de la manière suivante : **Route::get('/utilisateurs/idUtilisateur')**
 
@@ -104,7 +104,7 @@ Elle retourne un résultat JSON de la forme suivante :
 
 ## L'ajout d'un utilisateur
 
-Cette fonctionnalité permet d'ajouter un utilisateur dans la base de données. Pour utiliser celle-ci, il faudra s'authentifier avec informations valides se trouvant dans la table **user**.
+Cette fonctionnalité permet d'ajouter un utilisateur dans la base de données. Il est impossible de créer un compte si le **pseudo** et **l'adresse mail** sont déjà existant dans la base de données. Pour utiliser celle-ci, il faudra s'authentifier avec des informations valides se trouvant dans la table **user**. Sinon vous n'aurez pas la permission de faire votre requête.
 
 La route permettant d'accéder à cette fonctionnalité s'écrit de la manière suivante : **Route::post('/utilisateurs')**
 
@@ -124,14 +124,55 @@ Voici un exemple de requête pour ajouter un utilisateur :
 
 À partir du jour et du mois de naissance, l'application trouve le signe du zodiaque de l'utilisateur. Il en fait de même à partir de l'année pour trouver son signe astrologique chinois.
 
-## Code of Conduct
+## La suppression d'un utilisateur
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Cette fonctionnalité permet de supprimer un utilisateur de la base de données à partir de son **id**. De la même manière que la fonctionnalité précédente, vous devrez vous **authentifier** pour pouvoir supprimer un utilisateur de cette table.
 
-## Security Vulnerabilities
+La route permettant d'accéder à cette fonctionnalité s'écrit de la manière suivante : **Route::delete('/utilisateurs/idUtilisateur')**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Si la suppression a fonctionné, un code de la forme suivante sera retourné : 
 
-## License
+```
+{
+	"status": 1,
+	"message": "Supprimé",
+	"data": {
+		"id": 11,
+		"pseudo": "Bertrand",
+		"mail": "Bertrand@gmail.com",
+		"mdp": "Salut1111",
+		"signe_zodiaque": "Vierge",
+		"signe_chinois": "Singe",
+		"jour": 5,
+		"mois": 9,
+		"annee": 1920,
+		"created_at": "2023-04-08T18:18:54.000000Z",
+		"updated_at": "2023-04-09T14:40:08.000000Z"
+	}
+}
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+
+## La modification des informations d'un utilisateur
+
+Cette fonctionnalité permet de modifier les informations d'un utilisateur se trouvant dans la base de données. Cela se fait uniquement à partir des **données saisies dans la requête** de modification. Pour cette fonctionnalité également, vous devez vous **authentifier**.
+
+La route à utiliser est la suivante : **Route::put('/utilisateurs')**
+
+Voici un exemple de requête pour modifier un utilisateur : 
+
+```
+{
+	"id" : 21,
+	"pseudo": "Albert",
+	"mail" : "albert@gmail.com",
+	"mdp" : "albert1234*",
+	"jour" : 2,
+	"mois" : 10,
+	"annee" : 1971
+}
+
+```
+
+
+
