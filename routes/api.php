@@ -24,11 +24,11 @@ Route::get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class,
 // Détails d'un seul utilisateur
 Route::get('/utilisateurs/{id}', [App\Http\Controllers\UtilisateursController::class, 'detailsUtilisateurs']);
 
-// Ajout d'un utilisateur 
+// Ajout d'un utilisateur (accessible avec authentification Basic)
 Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs'])->middleware('auth.basic');
 
-// Suppression d'un utilisateur 
+// Suppression d'un utilisateur (accessible avec authentification Basic)
 Route::delete('/utilisateurs/{id}', [App\Http\Controllers\UtilisateursController::class, 'suppressionUtilisateurs'])->middleware('auth.basic');
 
-// Modification d'un utilisateur 
+// Modification d'un utilisateur (accessible avec authentification Basic)
 Route::put('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'modificationUtilisateurs'])->middleware('auth.basic');

@@ -75,9 +75,8 @@ class UtilisateursController extends Controller
 
     public function ajoutUtilisateurs(Request $request)
     {
-        // Validation des informations saisies
+        // Validation des données rentrées dans la requête
         $validator = Validator::make($request->all(), [
-            // 'id' => ['required','numeric'],
             'pseudo' => ['required', 'string', 'unique:utilisateurs,pseudo'],
             'mail' => ['required', 'email', 'unique:utilisateurs,mail'],
             'mdp' => ['required', 'string'],
@@ -126,8 +125,10 @@ class UtilisateursController extends Controller
         }
     }
 
+    // Fonction qui modifie les informations d'un utilisateur 
     public function modificationUtilisateurs(Request $request)
     {
+        // Validation des données rentrées dans la requête
         $validator = Validator::make($request->all(), [
             'id' => ['required', 'numeric'],
             'pseudo' => ['required', 'string', 'unique:utilisateurs,pseudo'],
@@ -142,6 +143,7 @@ class UtilisateursController extends Controller
             return $validator->errors();
         }
 
+        // Ajout dans bdd
         if ($utilisateur = Utilisateurs::find($request->id)) {
             $utilisateur->pseudo = $request->pseudo;
             $utilisateur->mail = $request->mail;
