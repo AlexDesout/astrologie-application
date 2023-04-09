@@ -18,8 +18,8 @@ class UtilisateursSeeder extends Seeder
             'pseudo' => 'Fernand',
             'mail' => 'fernand@gmail.com',
             'mdp' => "fernand69",
-            'signe_zodiaque' => "bélier",
-            'signe_chinois' => "coq",
+            'signe_zodiaque' => "Bélier",
+            'signe_chinois' => "Coq",
             'jour' => "12",
             'mois' => "12",
             'annee' => "1981"
@@ -28,8 +28,8 @@ class UtilisateursSeeder extends Seeder
             'pseudo' => 'Al',
             'mail' => 'alex@gmail.com',
             'mdp' => "alexx",
-            'signe_zodiaque' => "cancer",
-            'signe_chinois' => "chèvre",
+            'signe_zodiaque' => "Cancer",
+            'signe_chinois' => "Chèvre",
             'jour' => "1",
             'mois' => "07",
             'annee' => "2003" 
