@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Utilisateurs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 
 class UtilisateursController extends Controller
 {
-
     // Liste paginée des utilisateurs
     public function listeUtilisateurs()
     {
@@ -61,10 +61,9 @@ class UtilisateursController extends Controller
         } else {
             return "Capricorne";
         }
-        
     }
 
-     // Fonction qui recherche le signe astrologique chinois en fonction de l'année
+    // Fonction qui recherche le signe astrologique chinois en fonction de l'année
     function chercheChinois($annee)
     {
         $animaux = ["Singe", "Coq", "Chien", "Cochon", "Rat", "Boeuf", "Tigre", "Lapin", "Dragon", "Serpent", "Cheval", "Chèvre"];
@@ -72,24 +71,24 @@ class UtilisateursController extends Controller
         $signe = $animaux[$cycles];
         return $signe;
     }
-   
+
 
     public function ajoutUtilisateurs(Request $request)
     {
         // Validation des informations saisies
         $validator = Validator::make($request->all(), [
             // 'id' => ['required','numeric'],
-            'pseudo' => ['required','string', 'unique:utilisateurs,pseudo'],
-            'mail' => ['required','email', 'unique:utilisateurs,mail'],
-            'mdp' => ['required','string'],
+            'pseudo' => ['required', 'string', 'unique:utilisateurs,pseudo'],
+            'mail' => ['required', 'email', 'unique:utilisateurs,mail'],
+            'mdp' => ['required', 'string'],
             'jour' => ['required', 'integer', 'between:1,31'],
             'mois' => ['required', 'integer', 'between:1,12'],
             'annee' => ['required', 'integer', 'between:1900,2023']
-            ]);
-    
-            if ($validator->fails()) {
-                return $validator->errors();
-            }
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
 
         // Recherche des signes astro
         $zodiaque = $this->chercheZodiaque($request->jour, $request->mois);
@@ -107,13 +106,60 @@ class UtilisateursController extends Controller
         $utilisateur->annee = $request->annee;
         $ok = $utilisateur->save();
         if ($ok) {
-            return response()->json(["status" => 1, "message" => "Utilisateur ajouté","data" => $utilisateur],201);
-        } 
-        else {
+            return response()->json(["status" => 1, "message" => "Utilisateur ajouté", "data" => $utilisateur], 201);
+        } else {
             return response()->json(["status" => 0, "message" => "pb lors de
-    l'ajout"],400);
+    l'ajout"], 400);
         }
-        
     }
 
+    // Fonction qui supprime un utilisateur à partir de son id
+    public function suppressionUtilisateurs($id)
+    {
+        $utilisateur = Utilisateurs::find($id);
+        $ok = $utilisateur->delete();
+        if ($ok) {
+            return response()->json(["status" => 1, "message" => "Supprimé", "data" => $utilisateur], 200);
+        } else {
+            return response()->json(["status" => 0, "message" => "pb lors de
+            supression"], 400);
+        }
+    }
+
+    public function modificationUtilisateurs(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'numeric'],
+            'pseudo' => ['required', 'string', 'unique:utilisateurs,pseudo'],
+            'mail' => ['required', 'email', 'unique:utilisateurs,mail'],
+            'mdp' => ['required', 'string'],
+            'jour' => ['required', 'integer', 'between:1,31'],
+            'mois' => ['required', 'integer', 'between:1,12'],
+            'annee' => ['required', 'integer', 'between:1900,2023']
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
+        if ($utilisateur = Utilisateurs::find($request->id)) {
+            $utilisateur->pseudo = $request->pseudo;
+            $utilisateur->mail = $request->mail;
+            $utilisateur->mdp = $request->mdp;
+            $utilisateur->signe_zodiaque = $this->chercheZodiaque($request->jour, $request->mois);;
+            $utilisateur->signe_chinois = $this->chercheChinois($request->annee);
+            $utilisateur->jour = $request->jour;
+            $utilisateur->mois = $request->mois;
+            $utilisateur->annee = $request->annee;
+            $ok = $utilisateur->save();
+            return response()->json($utilisateur);
+            if ($ok) {
+                return response()->json(["status" => 1, "message" => "utilisateur modifié", "data" => $utilisateur], 201);
+            } else {
+                return response()->json(["status" => 0, "message" => "Problème lors de la modification"], 400);
+            }
+        } else {
+            return response()->json(["status" => 0, "message" => "Problème lors de la modification"], 400);
+        }
+    }
 }

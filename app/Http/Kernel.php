@@ -44,20 +44,10 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            // \App\Http\Middleware\AuthKey::class,
-            // \App\Http\Middleware\AuthBasic::class,
-            // \App\Http\Middleware\DigestAuthentication::class,
-            // \App\Http\Middleware\AuthBasic::class,
         ],
-        'digest' => [
-            \App\Http\Middleware\DigestAuthentication::class,
-            'auth.digest' => AuthenticateWithDigestAuth::class,
-
-        ],
-        'basic' => [
+        'auth.basic' => [
             \App\Http\Middleware\AuthBasic::class,
         ],
-        
 
     ];
 

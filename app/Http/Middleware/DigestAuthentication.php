@@ -3,55 +3,109 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DigestAuthentication
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        $username = config('app.auth_digest_username');
-        $password = config('app.auth_digest_password');
-        $realm = 'Protected Area';
-        $nonce = uniqid();
-        $opaque = md5($realm);
-        $digest = md5($username . ':' . $realm . ':' . $password);
-    
-        $header = $request->header('Authorization');
-    
-        if (!$header) {
-            return $this->unauthorizedResponse($nonce, $realm, $opaque);
+        // Vérifier si le client a envoyé un en-tête d'authentification
+        if (!$request->hasHeader('Authorization')) {
+            var_dump(($request->header("Authorization")));
+            return response()->json(['error' => 'Authentication required.'], 401);
         }
-    
-        $pattern = '/Digest username="(.*?)", realm="(.*?)", nonce="(.*?)", uri="(.*?)", response="(.*?)", opaque="(.*?)"/';
-        preg_match($pattern, $header, $matches);
-    
-        if (!$matches) {
-            return $this->unauthorizedResponse($nonce, $realm, $opaque);
+
+        // Extraire les informations d'authentification de l'en-tête
+        $authHeader = $request->header('Authorization');
+        $authInfo = $this->parseAuthHeader($authHeader);
+
+        // Vérifier si les informations d'authentification sont valides
+        if (!$this->isAuthValid($authInfo)) {
+            return response()->json(['error' => 'Invalid authentication information.'], 401);
         }
-    
-        $clientDigest = $matches[5];
-        $serverDigest = md5($username . ':' . $realm . ':' . $password);
-    
-        if ($clientDigest !== $serverDigest) {
-            return $this->unauthorizedResponse($nonce, $realm, $opaque);
+
+        // Authentifier l'utilisateur
+        $user = $this->authenticateUser($authInfo);
+
+        if (!$user) {
+            return response()->json(['error' => 'Invalid username or password.'], 401);
         }
-    
+
+        // Stocker l'utilisateur authentifié dans l'objet Request
+        $request->setUserResolver(function () use ($user) {
+            return $user;
+        });
+
+        // Passer la requête au middleware suivant
         return $next($request);
     }
-    
-    private function unauthorizedResponse($nonce, $realm, $opaque)
+
+    private function parseAuthHeader($header)
     {
-        $headers = [
-            'WWW-Authenticate' => sprintf('Digest realm="%s", qop="auth", nonce="%s", opaque="%s"', $realm, $nonce, $opaque)
-        ];
-    
-        return response('Unauthorized.', 401, $headers);
+        // Extraire les informations d'authentification de l'en-tête
+        $authHeader = substr($header, 7);
+        $authParts = explode(',', $authHeader);
+
+        $authInfo = [];
+        foreach ($authParts as $part) {
+            $part = trim($part);
+            list($key, $value) = explode('=', $part);
+            $authInfo[$key] = str_replace('"', '', $value);
+        }
+
+        return $authInfo;
     }
+
+    private function isAuthValid($authInfo)
+    {
+        // Vérifier si toutes les informations d'authentification sont présentes
+        $requiredKeys = ['username', 'realm', 'nonce', 'uri', 'qop', 'response'];
+        foreach ($requiredKeys as $key) {
+            if (!isset($authInfo[$key])) {
+                return false;
+            }
+        }
+
+        // Vérifier si le nonce est valide
+        $nonce = $authInfo['nonce'];
+        $timestamp = substr($nonce, 0, strpos($nonce, ':'));
+        $currentTime = time();
+        if ($currentTime - $timestamp > 300) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function authenticateUser($authInfo)
+    {
+        // Récupérer l'utilisateur correspondant au nom d'utilisateur
+        $user = User::where('username', $authInfo['username'])->first();
+
+        if (!$user) {
+            return null;
+        }
+
+        // Calculer le hash de
+
+
+        $realm = $authInfo['realm'];
+        $nonce = $authInfo['nonce'];
+        $uri = $authInfo['uri'];
+        $qop = $authInfo['qop'];
+        $password = $user->password;
+        $HA1 = md5($user->username . ':' . $realm . ':' . $password);
+        $HA2 = md5($authInfo['method'] . ':' . $uri);
+        $response = md5($HA1 . ':' . $nonce . ':' . $authInfo['nc'] . ':' . $authInfo['cnonce'] . ':' . $qop . ':' . $HA2);
     
+        // Vérifier si le hash de réponse correspond à celui envoyé par le client
+        if ($response !== $authInfo['response']) {
+            return null;
+        }
+    
+        return $user;
+    }
 }

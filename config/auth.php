@@ -46,12 +46,6 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'digest' => [
-            'driver' => 'digest',
-            'provider' => 'users',
-            'realm' => 'Restricted area',
-            'qop' => 'auth',
-        ],
     ],
 
     /*

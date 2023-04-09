@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\Response;
+use App\Http\Controllers\UtilisateursController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,28 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 // Liste paginée des utilisateurs
-
-// Route::middleware(['basic','digest'])->get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'listeUtilisateurs']);
-// Route::group(['middleware' => ['basic', 'digest']])->get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'listeUtilisateurs']);
-
-// Route::group(['middleware' => ['basic', 'digest']])->get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'listeUtilisateurs']);
 Route::get('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'listeUtilisateurs']);
 
 // Détails d'un seul utilisateur
 Route::get('/utilisateurs/{id}', [App\Http\Controllers\UtilisateursController::class, 'detailsUtilisateurs']);
 
-// Ajout d'un utilisateur
-
-
-// Route::middleware(['basic'])->group(function () {
-//     Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);
-// });
-
+// Ajout d'un utilisateur 
 Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs'])->middleware('auth.basic');
-// Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs'])->middleware('auth.digest');
 
-// Route::middleware(['digest'])->group(function () {
-//     Route::post('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'ajoutUtilisateurs']);
-// });
+// Suppression d'un utilisateur 
+Route::delete('/utilisateurs/{id}', [App\Http\Controllers\UtilisateursController::class, 'suppressionUtilisateurs'])->middleware('auth.basic');
+
+// Modification d'un utilisateur 
+Route::put('/utilisateurs', [App\Http\Controllers\UtilisateursController::class, 'modificationUtilisateurs'])->middleware('auth.basic');
