@@ -5,7 +5,7 @@ Cette application est une API sur laquelle il est possible de créer un compte u
 
 ## Les différentes fonctionnalités : 
 
-- [L'affichage de tous les utilisateurs](# L'affichage de tous les utilisateurs).
+- [L'affichage de tous les utilisateurs](#Laffichage-de-tous-les-utilisateurs).
 - [L'affichage d'information d'un utilisateur en particulier](https://laravel.com/docs/routing).
 - [L'ajout d'un utilisateur](https://laravel.com/docs/routing).
 - [La suppression d'un utilisateur](https://laravel.com/docs/routing).
