@@ -2,25 +2,20 @@
 
 Cette application est une API sur laquelle il est possible de créer un compte utilisateur. À des informations de naissance rentrées, les signes astrologiques chinois et du zodiaques sont attribués à l'utilisateur lors de son inscription. 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
 ## Les différentes fonctionnalités : 
 
-- [L'affichage de tous les utilisateurs](https://laravel.com/docs/routing).
+- [L'affichage de tous les utilisateurs](# L'affichage de tous les utilisateurs).
 - [L'affichage d'information d'un utilisateur en particulier](https://laravel.com/docs/routing).
 - [L'ajout d'un utilisateur](https://laravel.com/docs/routing).
 - [La suppression d'un utilisateur](https://laravel.com/docs/routing).
 - [La modification des informations d'un utilisateur](https://laravel.com/docs/routing).
 
-## Laravel Sponsors
+## L'affichage de tous les utilisateurs
+
+Cette route permet d'afficher tous les utilisateurs inscrits dans la base de données. De plus, cette liste d'utilisateurs fonctionne sous la forme de page. Une page peut contenir jusqu'à 10 utilisateurs.
+
+La route permettant d'accéder à cette fonctionalité s'écrit de la manière suivant : Route::get('/utilisateurs')
 
 We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
