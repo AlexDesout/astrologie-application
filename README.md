@@ -1,17 +1,17 @@
 # À propos de l'application :
 
 
-Cette application est une API sur laquelle il est possible de créer un compte utilisateur. À des informations de naissance rentrées, les signes astrologiques chinois et du zodiaque sont attribués à l'utilisateur lors de son inscription. 
+Cette application est une API sur laquelle il est possible de créer un compte utilisateur. À partir des informations de naissance rentrées, les signes astrologiques chinois et du zodiaque sont attribués à l'utilisateur lors de son inscription. 
 
 
 ## Les différentes fonctionnalités : 
 
 
 - [L'affichage de tous les utilisateurs](#Laffichage-de-tous-les-utilisateurs).
-- [L'affichage d'information d'un utilisateur en particulier](#Laffichage-d'information-d'un-utilisateur-en-particulier).
+- [L'affichage d'information d'un utilisateur en particulier](#Laffichage-dinformation-dun-utilisateur-en-particulier).
 - [L'ajout d'un utilisateur](#Lajout-dun-utilisateur).
-- [La suppression d'un utilisateur](#La-suppression-d'un-utilisateur).
-- [La modification des informations d'un utilisateur](#La-modification-des-informations-d'un-utilisateur).
+- [La suppression d'un utilisateur](#La-suppression-dun-utilisateur).
+- [La modification des informations d'un utilisateur](#La-modification-des-informations-dun-utilisateur).
 
 
 ## L'affichage de tous les utilisateurs
@@ -20,6 +20,7 @@ Cette application est une API sur laquelle il est possible de créer un compte u
 Cette route permet d'afficher tous les utilisateurs inscrits dans la base de données. De plus, cette liste d'utilisateurs fonctionne sous la forme de **page**. Une page peut contenir jusqu'à **10 utilisateurs**.
 
 La route permettant d'accéder à cette fonctionnalité s'écrit de la manière suivante : **Route::get('/utilisateurs')**
+
 Il est également possible de choisir la page que l'on veut afficher en écrivant ceci : **Route::get('/utilisateurs?page=(numeroDePage)')**
 
 Elle retourne un résultat JSON de la forme suivante : 
