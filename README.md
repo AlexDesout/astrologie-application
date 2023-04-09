@@ -1,20 +1,20 @@
-## À propos de l'application :
+# À propos de l'application :
 
 
 Cette application est une API sur laquelle il est possible de créer un compte utilisateur. À des informations de naissance rentrées, les signes astrologiques chinois et du zodiaque sont attribués à l'utilisateur lors de son inscription. 
 
 
-### Les différentes fonctionnalités : 
+## Les différentes fonctionnalités : 
 
 
 - [L'affichage de tous les utilisateurs](#Laffichage-de-tous-les-utilisateurs).
 - [L'affichage d'information d'un utilisateur en particulier](#Laffichage-d'information-d'un-utilisateur-en-particulier).
-- [L'ajout d'un utilisateur](https://laravel.com/docs/routing).
+- [L'ajout d'un utilisateur](#Lajout-dun-utilisateur).
 - [La suppression d'un utilisateur](https://laravel.com/docs/routing).
 - [La modification des informations d'un utilisateur](https://laravel.com/docs/routing).
 
 
-### L'affichage de tous les utilisateurs
+## L'affichage de tous les utilisateurs
 
 
 Cette route permet d'afficher tous les utilisateurs inscrits dans la base de données. De plus, cette liste d'utilisateurs fonctionne sous la forme de page. Une page peut contenir jusqu'à 10 utilisateurs.
@@ -80,7 +80,7 @@ Elle retourne un résultat JSON de la forme suivante :
 
 ```
 
-### L'affichage d'information d'un utilisateur en particulier
+## L'affichage d'information d'un utilisateur en particulier
 
 Cette route permet d'afficher les informations d'un utilisateur inscrit dans la base de données. La recherche se fait à partir de l'id de l'utilisateur qui sera saisi dans l'URL.
 
@@ -102,9 +102,27 @@ Elle retourne un résultat JSON de la forme suivante :
 
 ```
 
-## Contributing
+## L'ajout d'un utilisateur
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Cette fonctionnalité permet d'ajouter un utilisateur dans la base de données. Pour utiliser celle-ci, il faudra s'authentifier avec informations valides se trouvant dans la table **user**.
+
+La route permettant d'accéder à cette fonctionnalité s'écrit de la manière suivante : **Route::post('/utilisateurs')**
+
+Voici un exemple de requête pour ajouter un utilisateur : 
+
+```
+{
+  "pseudo": "Adrien",
+  "mail": "Adrien@gmail.com",
+  "mdp": "motdepasse",
+  "jour": 5,
+  "mois" : 9,
+  "annee" : 1920
+}
+
+```
+
+À partir du jour et du mois de naissance, l'application trouve le signe du zodiaque de l'utilisateur. Il en fait de même à partir de l'année pour trouver son signe astrologique chinois.
 
 ## Code of Conduct
 
