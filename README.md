@@ -21,7 +21,7 @@ Cette route permet d'afficher tous les utilisateurs inscrits dans la base de don
 
 La route permettant d'accéder à cette fonctionnalité s'écrit de la manière suivante : **Route::get('/utilisateurs')**
 
-Il est également possible de choisir la page que l'on veut afficher en écrivant ceci : **Route::get('/utilisateurs?page=(numeroDePage)')**
+Il est également possible de choisir la page que l'on veut afficher en écrivant ceci : **Route::get('/utilisateurs?page=numeroDePage')**
 
 Elle retourne un résultat JSON de la forme suivante : 
 
